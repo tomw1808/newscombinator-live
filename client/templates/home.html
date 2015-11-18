@@ -1,0 +1,21 @@
+---
+name: home
+url: /
+controller: CtrlMain
+---
+
+<div class="grid-container">
+  <div style="position:fixed; left: 0; right: 0; margin-top: 5px;" class="text-center" ng-show="newArticles.length > 0" >
+    <a class="button center hollow" ng-click="showNewArticles()" >Show new Articles</a>
+  </div>
+
+  <br />
+  <br />
+  <br />
+  <div class="grid-content slow easeIn fadeIn" ng-repeat="result in result.data.response.docs">
+    <a ng-href="{{result.url}}" target="_blank"><h5 style="margin: 0">{{result.title_website}}</h5></a>
+    <small>{{result.created_at | date:'medium'}}</small>
+    <p>{{result.content_short_analyze}}</p>
+  </div>
+</div>
+
