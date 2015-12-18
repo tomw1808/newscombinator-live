@@ -13,10 +13,17 @@
     angular.module('newscombinator')
         .controller("CtrlMain", function ($scope, $stateParams, $state, $http, $interval, $document, NotificationFactory, $window) {
 
+            if("Notification" in $window) {
+                $window.Notification.requestPermission(function() {
+                    //new $window.Notification("Test", {body: "Test test"});
+                });
+            }
 
             $scope.newArticles = [];
             $scope.articleIds = [];
             $scope.newArticleIds = [];
+
+            $scope.expanded = {};
 
             var loading = false;
 
@@ -51,33 +58,32 @@
                     loading = true;
                     $http({
                         method: 'GET',
-                        url: 'http://www.newscombinator.com/api/search/?dismax=0&highlight=0&only_newest_similar=1&rows=30&q=%28%20_val_%3A%22log%28add%281%2Chn_num_points%29%29%22^6.25%20_val_%3A%22log%28add%281%2Csimilar_doc_ids_count_i%29%29%22^12.5%20_val_%3A%22recip%28ms%28NOW%2FHOUR%2Ccreated_at%29%2C3.16e-11%2C2300%2C1%29%22^2.5%29'
+                        url: 'http://www.newscombinator.com/api/search?dismax=0&highlight=0&only_newest_similar=1&q=(+_val_:%22log(add(1,num_total_points))%22%5E0++_val_:%22log(add(1,num_twitter_upvotes))%22%5E0+_val_:%22recip(ms(NOW%2FHOUR,created_at),3.16e-11,2300,1)%22%5E5)&rows=30'
                     }).then(function successCallback(response) {
 
+                        angular.extend($scope.expanded, response.data.expanded);
                         if ($scope.result == undefined) {
                             $scope.result = response;
                             angular.forEach(response.data.response.docs, function(o,i) {
                                 $scope.articleIds.push(o.id);
                             });
-                            if("Notification" in $window) {
-                                $window.Notification.requestPermission(function() {
-                                    //new $window.Notification("Test", {body: "Test test"});
-                                });
-                            }
+
 
                         } else {
                             angular.forEach(response.data.response.docs, function (o, i) {
                                 if ($scope.articleIds.indexOf(o.id) == -1 && $scope.newArticleIds.indexOf(o.id) == -1) {
                                     $scope.newArticles.push(o);
                                     $scope.newArticleIds.push(o.id);
+
+
                                     if("Notification" in $window) {
                                         $window.Notification.requestPermission(function() {
-                                            var max = $scope.newArticles.length > 5 ? 5 : $scope.newArticles.length;
-                                            var body = "";
-                                            for(var i = 0; i < max; i++) {
-                                                body += $scope.newArticles[$scope.newArticles.length - 1 - i].title_website+"\n\n";
-                                            }
-                                            var notification = new $window.Notification("Newscombinator Live", {body: body});
+
+                                            var title = $scope.newArticles[$scope.newArticles.length - 1].title_website;
+                                            var body = $scope.newArticles[$scope.newArticles.length - 1].content_short;
+                                            var icon = $scope.newArticles[$scope.newArticles.length - 1].content_image == undefined ? null : "http://scrs.nagrgtr.com.s3-website-eu-west-1.amazonaws.com/"+$scope.newArticles[$scope.newArticles.length - 1].content_image+".jpg";
+
+                                            var notification = new $window.Notification(title, {body: body, icon: icon});
                                             notification.onclick = $scope.showNewArticles;
                                         });
                                     } else {
@@ -89,16 +95,16 @@
                                         });
 
                                     }
-
-
-
                                 }
                             });
                             if($scope.newArticleIds.length > 0) {
+
                                 $document[0].title = "(" + $scope.newArticleIds.length + ") Newscombinator Live";
                             } else {
                                 $document[0].title = "Newscombinator Live";
                             }
+
+
                         }
 
                         loading = false;

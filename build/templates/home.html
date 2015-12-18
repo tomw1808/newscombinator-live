@@ -1,16 +1,50 @@
 
 <div class="grid-container">
-  <div style="position:fixed; left: 0; right: 0; margin-top: 5px;" class="text-center" ng-show="newArticles.length > 0" >
-    <a class="button center hollow" ng-click="showNewArticles()" >Show new Articles</a>
-  </div>
+    <div style="position:fixed; left: 0; right: 0; margin-top: 5px;" class="text-center"
+         ng-show="newArticles.length > 0">
+        <a class="button center hollow" ng-click="showNewArticles()">Show new Articles</a>
+    </div>
 
-  <br />
-  <br />
-  <br />
-  <div class="grid-content slow easeIn fadeIn" ng-repeat="result in result.data.response.docs">
-    <a ng-href="{{result.url}}" target="_blank"><h5 style="margin: 0">{{result.title_website}}</h5></a>
-    <small>{{result.created_at | date:'medium'}}</small>
-    <p>{{result.content_short_analyze}}</p>
-  </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="grid-content">
+        <div class="card  slow easeIn fadeIn" ng-repeat="result in result.data.response.docs">
+            <div class="card-divider">
+                <a ng-href="{{result.url}}" target="_blank"><h5 style="margin: 0">{{result | showtitle}}</h5>
+                </a>
+            </div>
+            <img ng-show="{{result.content_image.length > 0}}"
+                 src="http://scrs.nagrgtr.com.s3-website-eu-west-1.amazonaws.com/{{result.content_image}}.jpg"/>
+            <div class="card-section">
+                <small>
+
+                    {{result.url | gethostname}} &bull; {{result.created_at | date:'medium'}}
+
+                    <span ng-repeat="sourceitem in expanded[result.id].docs">
+                        &bull;
+                                        <a target="_blank" ng-href="{{sourceitem.url}}">
+                                            <span title="Upvotes">{{sourceitem.num_total_points}}
+                                                <span class="fa fa-angle-up "></span>
+                                            </span>
+                                            <span title="Comments">{{sourceitem.num_total_comments}}
+                                                <span class="fa fa-comment-o"></span>
+                                            </span> on
+                                            <img class="img-responsive img-sourceitem"
+                                                 ng-src="{{sourceitem.url | getfavicon}}"/></a>
+
+                                    </span>
+                                    <span ng-show="result.num_twitter_upvotes > 0">
+                                        &bull;
+                                       {{result.num_twitter_upvotes}} <span class="fa fa-twitter" tooltip="Re-Tweets"></span>
+                                    </span>
+                </small>
+                <br/>
+                <p>{{result.content_short}}...</p>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 

@@ -23,6 +23,8 @@
     "tests"
   ],
   "dependencies": {
-    "foundation-apps": "~1.1.0"
+    "foundation-apps": "~1.1.0",
+    "ngInfiniteScroll": "~1.2.1",
+    "angular-loading-bar": "~0.8.0"
   }
 }

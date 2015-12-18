@@ -1,2 +1,11 @@
 @import "settings";
 @import "foundation";
+@import "loading-bar";
+
+
+img.img-sourceitem {
+  height: 14px;
+  display: inline;
+  max-width: 100%;
+  width: auto;
+}

@@ -27,25 +27,30 @@ var paths = {
   // Sass will check these folders for files when you use @import.
   sass: [
     'client/assets/scss',
+    'bower_components/angular-loading-bar/build',
     'bower_components/foundation-apps/scss'
   ],
   // These files include Foundation for Apps and its dependencies
   foundationJS: [
     'bower_components/fastclick/lib/fastclick.js',
     'bower_components/viewport-units-buggyfill/viewport-units-buggyfill.js',
-    'bower_components/tether/tether.js',
-    'bower_components/hammerjs/hammer.js',
-    'bower_components/angular/angular.js',
-    'bower_components/angular-animate/angular-animate.js',
-    'bower_components/angular-ui-router/release/angular-ui-router.js',
-    'bower_components/foundation-apps/js/vendor/**/*.js',
-    'bower_components/foundation-apps/js/angular/**/*.js',
-    '!bower_components/foundation-apps/js/angular/app.js'
+      'bower_components/tether/tether.js',
+      'bower_components/hammerjs/hammer.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-animate/angular-animate.js',
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/foundation-apps/js/vendor/**/*.js',
+      'bower_components/foundation-apps/js/angular/**/*.js',
+      '!bower_components/foundation-apps/js/angular/app.js',
+      'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
+      'bower_components/angular-loading-bar/build/loading-bar.min.js'
   ],
   // These files are for your app's JavaScript
   appJS: [
       'client/assets/js/ctrlMain.js',
+      'client/assets/js/filters/*.*',
       'client/assets/js/app.js'
+
   ]
 }
 
