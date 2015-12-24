@@ -22,8 +22,11 @@ controller: CtrlMain
             <div class="card-section">
                 <small>
 
+                    Leave this side-panel open to receive updates about this topic.
+                    <br />
+                    <br />
                     <strong>url</strong><br />
-                    {{followDoc.url}}
+                    <a ng-href="{{followDoc.url}}" target="_blank">{{followDoc.url}}</a>
                     <br/>
                     <br/>
                     <strong>indexed on</strong> <br />{{followDoc.created_at | date:'medium'}}
@@ -77,9 +80,9 @@ controller: CtrlMain
             <div class="card-section">
                 <small>
 
+                    <a zf-open="follow-topic" ng-click="assignFollowDoc(result);"><strong>Follow this topic</strong></a>&bull;
                     {{result.url | gethostname}} &bull; {{result.created_at | date:'medium'}}
 
-                    <a zf-open="follow-topic" ng-click="assignFollowDoc(result);">Follow</a>
                     <span ng-repeat="sourceitem in expanded[result.id].docs">
                         &bull;
                         <a target="_blank" ng-href="{{sourceitem.url}}">

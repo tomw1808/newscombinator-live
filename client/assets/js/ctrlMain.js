@@ -33,6 +33,20 @@
                             angular.forEach(response.data.response.docs, function (article, i) {
                                 if ($scope.followDoc.similar_docs.map(function(e) { return e.id; }).indexOf(article.id) == -1) {
                                     $scope.followDoc.similar_docs.unshift(article);
+                                    if ("Notification" in $window) {
+                                        $window.Notification.requestPermission(function () {
+
+                                            var title = article.title_website;
+                                            var body = article.content_short;
+                                            var icon = (article.content_image == undefined || article.content_image == null || article.content_image == '') ? null : "http://scrs.nagrgtr.com.s3-website-eu-west-1.amazonaws.com/" + article.content_image + ".jpg";
+
+                                            var notification = new $window.Notification(title, {
+                                                body: body,
+                                                icon: icon
+                                            });
+                                            notification.onclick = $scope.showNewArticles;
+                                        });
+                                    }
                                 }
                             });
                         }
@@ -49,7 +63,7 @@
 
             $scope.expanded = {};
 
-            var queryString = '( _val_:"num_similar_docs"^1.5 _val_:"log(add(1,num_total_points))"^3.0  _val_:"log(add(1,num_twitter_upvotes))"^4.0 _val_:"recip(ms(NOW/HOUR,created_at),3.16e-11,2300,1)"^2.0)';
+            var queryString = '( _val_:"log(add(1,num_similar_docs))"^8.5 _val_:"log(add(1,num_total_points))"^2.0  _val_:"log(add(1,num_twitter_upvotes))"^8.0 _val_:"recip(ms(NOW/HOUR,created_at),3.16e-11,2300,1)"^1.5)';
 
             $scope.loading = false;
 
@@ -88,7 +102,8 @@
                             "dismax": 0,
                             "highlight": 0,
                             "only_newest_similar":1,
-                            "rows": 30
+                            "rows": 30,
+                            "fq[]": "language:en"
 
                         }
                     }).then(function successCallback(response) {
@@ -177,11 +192,13 @@
                             "highlight": 0,
                             "only_newest_similar": 1,
                             "rows": 10,
-                            "start": $scope.articleIds.length
+                            "start": $scope.articleIds.length,
+                            "fq[]": "language:en"
 
                         }
                     }).then(function successCallback(response) {
                         $scope.loading = false;
+                        angular.extend($scope.expanded, response.data.expanded);
                         angular.forEach(response.data.response.docs, function (article, i) {
                             if ($scope.articleIds.indexOf(article.id) == -1 && $scope.newArticleIds.indexOf(article.id) == -1) {
                                 $scope.articleIds.push(article.id);
