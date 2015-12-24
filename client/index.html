@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en" ng-app="application">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Newscombinator Live</title>
     <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
     <script src="./assets/js/foundation.js"></script>
@@ -11,16 +11,18 @@
     <script src="./assets/js/app.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-  </head>
-  <body>
-    <div class="grid-frame vertical">
-      <div class="grid-content shrink" style="padding: 0;">
-        <ul class="primary condense menu-bar">
-          <li><a><strong>Newscombinator Live</strong></a></li>
-        </ul>
-      </div>
-      <div ui-view class="grid-content">
-      </div>
-    </div>
-  </body>
+</head>
+<body>
+<div class="grid-frame vertical">
+
+        <div class="shrink collapse grid-content">
+            <ul class="primary menu-bar">
+                <li><a><strong>Newscombinator Live</strong></a></li>
+            </ul>
+        </div>
+        <div ui-view class="grid-block ui-view-block" >
+        </div>
+
+</div>
+</body>
 </html>

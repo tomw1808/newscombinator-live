@@ -3,7 +3,7 @@
 angular.module('newscombinator')
     .filter('gethostname', function () {
         return function(data, sourcemode) {
-            if(data.indexOf("reddit") != -1 && sourcemode != undefined) {
+            if(data != undefined && data.indexOf("reddit") != -1 && sourcemode != undefined) {
                 return data.replace("http://www.","");
             }
             var    a      = document.createElement('a');

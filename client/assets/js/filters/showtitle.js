@@ -4,6 +4,9 @@ angular.module('newscombinator')
     .filter('showtitle',  function($filter) {
         return function(objResult, arrHighlight) {
 
+            if(objResult == undefined) {
+                console.log(objResult);
+            }
 
             if(objResult.title_website != '' && objResult.title_website != null && objResult.title_website.indexOf("Firespotting! Interesting Ideas, Every Day!") == -1) {
 

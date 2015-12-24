@@ -10,6 +10,7 @@
             'foundation.dynamicRouting.animations',
             //user
             'angular-loading-bar',
+            'infinite-scroll',
             'newscombinator'
         ])
         .config(config)

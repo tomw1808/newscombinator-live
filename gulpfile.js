@@ -42,17 +42,18 @@ var paths = {
       'bower_components/foundation-apps/js/vendor/**/*.js',
       'bower_components/foundation-apps/js/angular/**/*.js',
       '!bower_components/foundation-apps/js/angular/app.js',
-      'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
+      'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
       'bower_components/angular-loading-bar/build/loading-bar.min.js'
   ],
   // These files are for your app's JavaScript
   appJS: [
       'client/assets/js/ctrlMain.js',
       'client/assets/js/filters/*.*',
+      'client/assets/js/directives/*.*',
       'client/assets/js/app.js'
 
   ]
-}
+};
 
 // 3. TASKS
 // - - - - - - - - - - - - - - -

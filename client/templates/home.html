@@ -6,10 +6,62 @@ controller: CtrlMain
 
 <div class="grid-container">
     <div style="position:fixed; left: 0; right: 0; margin-top: 5px;" class="text-center"
-         ng-show="newArticles.length > 0">
-        <a class="button center hollow" ng-click="showNewArticles()">Show new Articles</a>
+         ng-show="newArticleIds.length > 0">
+        <a class="button center" ng-click="showNewArticles()">Show new Articles</a>
     </div>
+    <zf-panel id="follow-topic" position="right" class="panel-fixed">
+        <a zf-close="" class="close-button">×</a>
 
+        <div class="card">
+            <div class="card-divider">
+                <a ng-href="{{followDoc.url}}" target="_blank">
+                    <h7 style="margin: 0">{{followDoc | showtitle}}</h7>
+                </a>
+
+            </div>
+            <div class="card-section">
+                <small>
+
+                    <strong>url</strong><br />
+                    {{followDoc.url}}
+                    <br/>
+                    <br/>
+                    <strong>indexed on</strong> <br />{{followDoc.created_at | date:'medium'}}
+                    <br />
+                    <br />
+                    <strong>found on</strong> <br />
+                    <span ng-repeat="sourceitem in expanded[followDoc.id].docs">
+
+                        <a target="_blank" ng-href="{{sourceitem.url}}">
+                            <img class="img-responsive img-sourceitem"
+                                 ng-src="{{sourceitem.url | getfavicon}}"/>
+                                            <span title="Upvotes">{{sourceitem.num_total_points}}
+                                                <span class="fa fa-angle-up "></span>
+                                            </span>
+                                            <span title="Comments">{{sourceitem.num_total_comments}}
+                                                <span class="fa fa-comment-o"></span>
+                                            </span>
+                            </a>
+<br />
+                                    </span>
+                                    <span ng-show="followDoc.num_twitter_upvotes > 0">
+
+                                        {{followDoc.num_twitter_upvotes}} <span class="fa fa-twitter"
+                                                                                tooltip="Re-Tweets"></span>
+                                    </span>
+                </small>
+
+            </div>
+            <div class="card-section" ng-show="followDoc.similar_docs.length > 0" >
+                <strong>Similar Stories</strong>
+                </div>
+            <div class="card-section" ng-repeat="similar in followDoc.similar_docs" >
+                <a ng-href="{{similar.url}}" target="_blank">
+                    <small>{{similar.created_at | date:'short'}}: {{similar | showtitle}} - {{similar.url | gethostname}}</small>
+                </a>
+            </div>
+        </div>
+    </zf-panel>
     <br/>
     <br/>
     <br/>
@@ -18,6 +70,7 @@ controller: CtrlMain
             <div class="card-divider">
                 <a ng-href="{{result.url}}" target="_blank"><h5 style="margin: 0">{{result | showtitle}}</h5>
                 </a>
+
             </div>
             <img ng-show="{{result.content_image.length > 0}}"
                  src="http://scrs.nagrgtr.com.s3-website-eu-west-1.amazonaws.com/{{result.content_image}}.jpg"/>
@@ -26,30 +79,53 @@ controller: CtrlMain
 
                     {{result.url | gethostname}} &bull; {{result.created_at | date:'medium'}}
 
+                    <a zf-open="follow-topic" ng-click="assignFollowDoc(result);">Follow</a>
                     <span ng-repeat="sourceitem in expanded[result.id].docs">
                         &bull;
-                                        <a target="_blank" ng-href="{{sourceitem.url}}">
+                        <a target="_blank" ng-href="{{sourceitem.url}}">
                                             <span title="Upvotes">{{sourceitem.num_total_points}}
                                                 <span class="fa fa-angle-up "></span>
                                             </span>
                                             <span title="Comments">{{sourceitem.num_total_comments}}
                                                 <span class="fa fa-comment-o"></span>
                                             </span> on
-                                            <img class="img-responsive img-sourceitem"
-                                                 ng-src="{{sourceitem.url | getfavicon}}"/></a>
+                            <img class="img-responsive img-sourceitem"
+                                 ng-src="{{sourceitem.url | getfavicon}}"/></a>
 
                                     </span>
                                     <span ng-show="result.num_twitter_upvotes > 0">
                                         &bull;
-                                       {{result.num_twitter_upvotes}} <span class="fa fa-twitter" tooltip="Re-Tweets"></span>
+                                        {{result.num_twitter_upvotes}} <span class="fa fa-twitter"
+                                                                             tooltip="Re-Tweets"></span>
                                     </span>
                 </small>
                 <br/>
-                <p>{{result.content_short}}...  <a ng-href="{{result.url}}" target="_blank">[read more]</a></p>
+                <p>{{result.content_short}}... <a ng-href="{{result.url}}" target="_blank">[read more]</a></p>
             </div>
         </div>
 
+    </div>
+    <div infinite-scroll="nextPage()" infinite-scroll-parent="true" infinite-scroll-disabled="loading"
+         infinite-scroll-distance="1">
 
     </div>
+
 </div>
 
+<div class="cssload-loader-inner" ng-show="loading">
+    <div class="cssload-cssload-loader-line-wrap-wrap">
+        <div class="cssload-loader-line-wrap"></div>
+    </div>
+    <div class="cssload-cssload-loader-line-wrap-wrap">
+        <div class="cssload-loader-line-wrap"></div>
+    </div>
+    <div class="cssload-cssload-loader-line-wrap-wrap">
+        <div class="cssload-loader-line-wrap"></div>
+    </div>
+    <div class="cssload-cssload-loader-line-wrap-wrap">
+        <div class="cssload-loader-line-wrap"></div>
+    </div>
+    <div class="cssload-cssload-loader-line-wrap-wrap">
+        <div class="cssload-loader-line-wrap"></div>
+    </div>
+</div>
