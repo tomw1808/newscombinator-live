@@ -101,7 +101,7 @@
                             "q": queryString,
                             "dismax": 0,
                             "highlight": 0,
-                            "only_newest_similar":1,
+                            "only_newest_similar":0,
                             "rows": 30,
                             "fq[]": "language:en"
 
@@ -190,7 +190,7 @@
                             "q": queryString,
                             "dismax": 0,
                             "highlight": 0,
-                            "only_newest_similar": 1,
+                            "only_newest_similar": 0,
                             "rows": 10,
                             "start": $scope.articleIds.length,
                             "fq[]": "language:en"
