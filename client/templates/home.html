@@ -1,6 +1,6 @@
 ---
 name: home
-url: /
+url: /:filter_id
 controller: CtrlMain
 ---
 
@@ -68,7 +68,7 @@ controller: CtrlMain
     <br/>
     <br/>
     <br/>
-    <div class="grid-content">
+    <div class="grid-content no-padding">
         <div class="card  slow easeIn fadeIn" ng-repeat="result in result.data.response.docs">
             <div class="card-divider">
                 <a ng-href="{{result.url}}" target="_blank"><h5 style="margin: 0">{{result | showtitle}}</h5>
@@ -77,7 +77,7 @@ controller: CtrlMain
             </div>
             <img ng-show="{{result.content_image.length > 0}}"
                  src="http://scrs.nagrgtr.com.s3-website-eu-west-1.amazonaws.com/{{result.content_image}}.jpg"/>
-            <div class="card-section">
+            <div class="card-divider">
                 <small>
 
                     <a zf-open="follow-topic" ng-click="assignFollowDoc(result);"><strong>Follow this topic</strong></a>&bull;
@@ -102,7 +102,9 @@ controller: CtrlMain
                                                                              tooltip="Re-Tweets"></span>
                                     </span>
                 </small>
-                <br/>
+                </div>
+
+            <div class="card-section">
                 <p>{{result.content_short}}... <a ng-href="{{result.url}}" target="_blank">[read more]</a></p>
             </div>
         </div>

@@ -20,6 +20,15 @@ img.img-sourceitem {
   width: 95px;
 }
 
+.card {
+  word-wrap: break-word;
+  width: 100%;
+}
+
+.no-padding {
+  padding: 0;
+}
+
 .cssload-cssload-loader-line-wrap-wrap {
   animation: cssload-spin 2300ms cubic-bezier(.175, .885, .32, 1.275) infinite;
   -o-animation: cssload-spin 2300ms cubic-bezier(.175, .885, .32, 1.275) infinite;

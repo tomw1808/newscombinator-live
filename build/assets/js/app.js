@@ -18,6 +18,7 @@
                 });
             }
 
+
             function loadMoreFollow() {
                 if($scope.followDoc != undefined && $scope.followDoc.id != undefined) {
                     $http({
@@ -72,6 +73,7 @@
                 position: 'top-right'
             });
 
+
             $scope.assignFollowDoc = function (doc) {
                 $scope.followDoc = doc;
                 loadMoreFollow();
@@ -103,7 +105,13 @@
                             "highlight": 0,
                             "only_newest_similar":0,
                             "rows": 30,
-                            "fq[]": "language:en"
+                            "filter_id": $stateParams.filter_id,
+                            "fq[0]": "language:en",
+                            "fq[1]": "!title_website:\"Problem loading page\"",
+                            "fq[2]": "!title_website:\"Binary Trader Pro on Twitter*\"",
+                            "fq[3]": "!url:*dukascopy*",
+                            "fq[4]": "!title_website:\"Euro exchange rates *\"",
+                            "fq[5]": "!title_website:\"Page Not Found\""
 
                         }
                     }).then(function successCallback(response) {
@@ -191,9 +199,15 @@
                             "dismax": 0,
                             "highlight": 0,
                             "only_newest_similar": 0,
-                            "rows": 10,
+                            "rows": 20,
+                            "filter_id": $stateParams.filter_id,
                             "start": $scope.articleIds.length,
-                            "fq[]": "language:en"
+                            "fq[0]": "language:en",
+                            "fq[1]": "!title_website:\"Problem loading page\"",
+                            "fq[5]": "!title_website:\"Page Not Found\"",
+                            "fq[2]": "!title_website:\"Binary Trader Pro on Twitter*\"",
+                            "fq[3]": "!url:*dukascopy*",
+                            "fq[4]": "!title_website:\"Euro exchange rates *\""
 
                         }
                     }).then(function successCallback(response) {
