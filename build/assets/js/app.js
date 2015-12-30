@@ -73,6 +73,7 @@
                 position: 'top-right'
             });
 
+            var num_docs_total = 0;
 
             $scope.assignFollowDoc = function (doc) {
                 $scope.followDoc = doc;
@@ -106,7 +107,6 @@
                             "only_newest_similar":0,
                             "rows": 30,
                             "filter_id": $stateParams.filter_id,
-                            "fq[0]": "language:en",
                             "fq[1]": "!title_website:\"Problem loading page\"",
                             "fq[2]": "!title_website:\"Binary Trader Pro on Twitter*\"",
                             "fq[3]": "!url:*dukascopy*",
@@ -120,6 +120,7 @@
                         angular.extend($scope.expanded, response.data.expanded);
                         if ($scope.result == undefined) {
                             $scope.result = response;
+                            num_docs_total = response.data.response.numFound;
                             angular.forEach(response.data.response.docs, function (o, i) {
                                 if ($scope.articleIds.indexOf(o.id) == -1 && $scope.newArticleIds.indexOf(o.id) == -1) {
                                     $scope.articleIds.push(o.id);
@@ -128,6 +129,9 @@
 
 
                         } else {
+                            if(num_docs_total < response.data.response.numFound) {
+                                num_docs_total = response.data.response.numFound;
+                            }
                             angular.forEach(response.data.response.docs, function (article, i) {
                                 if ($scope.articleIds.indexOf(article.id) == -1 && $scope.newArticleIds.indexOf(article.id) == -1) {
 
@@ -189,7 +193,7 @@
             loadContent();
 
             $scope.nextPage = function () {
-                if (!$scope.loading) {
+                if (!$scope.loading && $scope.articleIds.length < num_docs_total) {
                     $scope.loading = true;
                     $http({
                         method: 'GET',
@@ -202,7 +206,6 @@
                             "rows": 20,
                             "filter_id": $stateParams.filter_id,
                             "start": $scope.articleIds.length,
-                            "fq[0]": "language:en",
                             "fq[1]": "!title_website:\"Problem loading page\"",
                             "fq[5]": "!title_website:\"Page Not Found\"",
                             "fq[2]": "!title_website:\"Binary Trader Pro on Twitter*\"",
