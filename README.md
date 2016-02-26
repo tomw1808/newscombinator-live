@@ -8,13 +8,16 @@ This is a test for [Babbleaway](http://babbleaway.com) the classifier app. The w
 ## Changes/Fixes in Libraries
 In order to make it work, there is a change in one of the libraries necessary. The ngInifiteScroll library does not cooperate with the foundation way of displaying the viewport very well. I have not found any other solution than making a change in the library itself. 
 
-Change the following line (173) in /bower_components/ngInfiniteScroll/ng-infinite-scroll.js:
+Change the following line (173 sometimes line 177) in /bower_components/ngInfiniteScroll/ng-infinite-scroll.js:
 
     changeContainer(angular.element(elem.parent()));
           
 to the following:
 
     changeContainer(angular.element(elem.parent().parent()));
+    
+   
+   
     
 
 ## Usage
@@ -23,6 +26,8 @@ to the following:
 * bower install
 * foundation watch
 * apply the patch above.
+
+In addition, after installing Windows 10 now, foundation build is not working anymore. its `gulp build` instead of `foundation build`. If someone knows why, I would be pleased if you could enlighten me.
 
 ## Other
 
