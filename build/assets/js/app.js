@@ -64,7 +64,7 @@
 
             $scope.expanded = {};
 
-            var queryString = '( _val_:"log(add(1,num_similar_docs))"^8.5 _val_:"log(add(1,num_total_points))"^2.0  _val_:"log(add(1,num_twitter_upvotes))"^8.0 _val_:"recip(ms(NOW/HOUR,created_at),3.16e-11,2300,1)"^1.5)';
+            var queryString = '( _val_:"recip(ms(NOW/HOUR,created_at),3.16e-11,2300,1)"^1.5)';
 
             $scope.loading = false;
 
